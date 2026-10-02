@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CanchaCard from "../components/CanchaCard.jsx";
 import { obtenerCanchas } from "../services/CanchaService.jsx";
-import "../styles/cancha.css";
+import "../styles/Cancha.css";
 
 function CanchaPage() {
   const [canchas, setCanchas] = useState([]);

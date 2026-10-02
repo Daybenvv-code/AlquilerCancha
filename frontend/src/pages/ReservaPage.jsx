@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReservaCard from "../components/ReservaCard.jsx";
 import { obtenerReservas, eliminarReserva } from "../services/ReservaService.jsx";
-import "../styles/reserva.css";
+import "../styles/Reserva.css";
 
 function ReservaPage() {
   const [reservas, setReservas] = useState([]);

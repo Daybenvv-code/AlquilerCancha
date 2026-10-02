@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ClienteCard from "../components/ClienteCard.jsx";
 import { obtenerCliente } from "../services/ClienteService.jsx";
-import "../styles/cliente.css";
+import "../styles/Cliente.css";
 
 function ClientePage() {
   const [clientes, setClientes] = useState([]);
