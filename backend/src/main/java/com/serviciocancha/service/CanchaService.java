@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-
 public class CanchaService {
 
     @Autowired
@@ -24,5 +23,25 @@ public class CanchaService {
 
     public Cancha guardar(Cancha cancha) {
         return canchaRepository.save(cancha);
+    }
+
+    public Cancha actualizar(Integer id, Cancha datos) {
+        Cancha cancha = canchaRepository.findById(id)
+                .orElse(null);
+
+        if (cancha == null) {
+            return null;
+        }
+
+        cancha.setNombre(datos.getNombre());
+        cancha.setTipoDeporte(datos.getTipoDeporte());
+        cancha.setPrecioPorHora(datos.getPrecioPorHora());
+        cancha.setEstado(datos.getEstado());
+
+        return canchaRepository.save(cancha);
+    }
+
+    public void eliminar(Integer id) {
+        canchaRepository.deleteById(id);
     }
 }
