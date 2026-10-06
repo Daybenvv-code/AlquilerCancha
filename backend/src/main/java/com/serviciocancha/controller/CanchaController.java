@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/canchas")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "https://alquilercancha-production-7ea7.up.railway.app")
 public class CanchaController {
 
     @Autowired

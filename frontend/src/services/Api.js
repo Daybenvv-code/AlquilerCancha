@@ -1,1 +1,1 @@
-export const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://alquilercancha-production-b997.up.railway.app/api';
+export const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://alquilercancha-production-7ea7.up.railway.app/api';
