@@ -1,6 +1,7 @@
-const API_URL = "http://localhost:8081/api/reservas";
+import { API_BASE_URL } from './Api';
 
-// Obtener todas las reservas
+const API_URL = `${API_BASE_URL}/reservas`;
+
 export const obtenerReservas = async () => {
   const response = await fetch(API_URL);
   if (!response.ok) {
@@ -10,7 +11,6 @@ export const obtenerReservas = async () => {
   return await response.json();
 };
 
-// Obtener una reserva por ID
 export const obtenerReservaPorId = async (id) => {
   const response = await fetch(`${API_URL}/${id}`);
   if (!response.ok) {
@@ -20,7 +20,6 @@ export const obtenerReservaPorId = async (id) => {
   return await response.json();
 };
 
-// Crear una nueva reserva
 export const crearReserva = async (reservaData) => {
   const response = await fetch(API_URL, {
     method: "POST",
@@ -36,7 +35,6 @@ export const crearReserva = async (reservaData) => {
   return await response.json();
 };
 
-// Actualizar una reserva existente
 export const actualizarReserva = async (id, reservaData) => {
   const response = await fetch(`${API_URL}/${id}`, {
     method: "PUT",
@@ -52,7 +50,6 @@ export const actualizarReserva = async (id, reservaData) => {
   return await response.json();
 };
 
-// Eliminar una reserva
 export const eliminarReserva = async (id) => {
   const response = await fetch(`${API_URL}/${id}`, {
     method: "DELETE",
