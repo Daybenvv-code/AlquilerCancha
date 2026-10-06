@@ -9,7 +9,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/reservas")
-@CrossOrigin(origins = "https://alquilercancha-production-7ea7.up.railway.app")
 public class ReservaController {
 
     @Autowired
