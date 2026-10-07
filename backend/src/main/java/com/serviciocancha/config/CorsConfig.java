@@ -16,9 +16,10 @@ public class CorsConfig {
                 registry.addMapping("/**")
                         .allowedOriginPatterns(
                                 "https://invigorating-endurance-production-b7e9.up.railway.app",
-                                "http://localhost:5173"
+                                "http://localhost:5173",
+                                "http://localhost:3000"
                         )
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "PATCH")
                         .allowedHeaders("*")
                         .allowCredentials(true);
             }
