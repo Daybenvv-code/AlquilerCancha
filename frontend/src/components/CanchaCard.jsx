@@ -4,15 +4,19 @@ function CanchaCard({ cancha, onEditar, onEliminar }) {
   // Validación de seguridad para evitar pantallas en blanco si el objeto llega indefinido
   if (!cancha) return null;
 
+  // Normalizamos el estado a minúsculas para comparar fácilmente ("disponible", "ocupado", "mantenimiento")
+  const estadoNormalizado = (cancha.estado || 'disponible').toLowerCase();
+
   return (
     <div className="cancha-card">
       <h3>{cancha.nombre || 'Cancha sin nombre'}</h3>
-      <p><strong>Tipo / Deporte:</strong> {cancha.tipoDeporte || cancha.tipo || 'No especificado'}</p>
-      <p><strong>Precio por Hora:</strong> S/ {cancha.precioPorHora || cancha.precio || 0}</p>
+      <p><strong>Tipo / Deporte:</strong> {cancha.tipoDeporte || 'No especificado'}</p>
+      <p><strong>Precio por Hora:</strong> S/ {cancha.precioPorHora || 0}</p>
       <p>
         <strong>Estado:</strong>{' '}
-        <span className={`estado ${cancha.disponible ? 'disponible' : 'ocupado'}`}>
-          {cancha.disponible ? 'Disponible' : 'No disponible'}
+        <span className={`estado ${estadoNormalizado}`}>
+          {/* Capitalizamos la primera letra para mostrarlo bonito */}
+          {estadoNormalizado.charAt(0).toUpperCase() + estadoNormalizado.slice(1)}
         </span>
       </p>
 
