@@ -21,7 +21,7 @@ public class Cliente {
     @Column(length = 100)
     private String email;
 
-    @Column(length = 255)
+    @Column(name = "\"password\"", length = 255)
     private String password;
 
     public Cliente() {}
