@@ -15,6 +15,7 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOriginPatterns(
+                                "https://alquiler-cancha-3tmh.vercel.app",
                                 "https://invigorating-endurance-production-b7e9.up.railway.app",
                                 "http://localhost:5173",
                                 "http://localhost:3000"
