@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CanchaCard from "../components/CanchaCard.jsx";
-import CanchaModal from "../components/CanchaModal.jsx";
+import CanchaCreateModal from '../components/CanchaCreateModal.jsx';
+import CanchaEditModal from '../components/CanchaEditModal.jsx';
 import {
   obtenerCanchas,
   crearCancha,
@@ -14,9 +15,9 @@ function CanchaPage() {
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
 
-  // Estado para controlar la visibilidad del modal
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  // Estado para guardar la cancha que se enviará a editar (null si se va a crear)
+  // Estados separados para cada modal
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
   const [canchaAEditar, setCanchaAEditar] = useState(null);
 
   useEffect(() => {
@@ -37,46 +38,45 @@ function CanchaPage() {
       });
   };
 
-  // PASO 2.1: Abrir modal para Crear
   const handleAbrirCrear = () => {
-    setCanchaAEditar(null); // Nos aseguramos que no haya datos cargados de edición
-    setIsModalOpen(true);
+    setIsCreateOpen(true);
   };
 
-  // PASO 2.2: Abrir modal para Editar
   const handleEditar = (cancha) => {
-    setCanchaAEditar(cancha); // Pasamos el objeto cancha completo al estado
-    setIsModalOpen(true);
+    setCanchaAEditar(cancha);
+    setIsEditOpen(true);
   };
 
-  // PASO 2.3: Guardar (Detecta si es POST o PUT)
-  const handleGuardarCancha = async (datosFormulario) => {
-    if (canchaAEditar) {
-      // Petición PUT al Backend
-      const canchaActualizada = await actualizarCancha(canchaAEditar.id, datosFormulario);
-      
-      // Actualizamos el arreglo local reemplazando solo el registro editado
-      setCanchas((prev) =>
-        prev.map((item) => (item.id === canchaAEditar.id ? canchaActualizada : item))
-      );
-    } else {
-      // Petición POST al Backend
+  const handleCrearCancha = async (datosFormulario) => {
+    try {
       const nuevaCancha = await crearCancha(datosFormulario);
-      
-      // Añadimos la nueva cancha al arreglo local
       setCanchas((prev) => [...prev, nuevaCancha]);
+      setIsCreateOpen(false);
+    } catch (err) {
+      console.error("Error al crear la cancha:", err);
+      alert("Ocurrió un error al crear la cancha.");
     }
   };
 
-  // PASO 2.4: Petición DELETE al backend
+  const handleActualizarCancha = async (datosFormulario) => {
+    try {
+      const canchaActualizada = await actualizarCancha(canchaAEditar.id, datosFormulario);
+      setCanchas((prev) =>
+        prev.map((item) => (item.id === canchaAEditar.id ? { ...item, ...canchaActualizada } : item))
+      );
+      setIsEditOpen(false);
+    } catch (err) {
+      console.error("Error al actualizar la cancha:", err);
+      alert("Ocurrió un error al actualizar la cancha.");
+    }
+  };
+
   const handleEliminar = async (id) => {
     const confirmacion = window.confirm("¿Estás seguro de eliminar esta cancha?");
     if (!confirmacion) return;
 
     try {
       await eliminarCancha(id);
-      
-      // Filtramos la lista para remover la cancha eliminada sin recargar la página
       setCanchas((prev) => prev.filter((cancha) => cancha.id !== id));
     } catch (err) {
       console.error("Error al eliminar cancha:", err);
@@ -112,12 +112,19 @@ function CanchaPage() {
         </div>
       )}
 
-      {/* Componente Modal */}
-      <CanchaModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onSave={handleGuardarCancha}
-        canchaEditar={canchaAEditar}
+      {/* Modal exclusivo para Crear */}
+      <CanchaCreateModal
+        isOpen={isCreateOpen}
+        onClose={() => setIsCreateOpen(false)}
+        onSave={handleCrearCancha}
+      />
+
+      {/* Modal exclusivo para Editar */}
+      <CanchaEditModal
+        isOpen={isEditOpen}
+        onClose={() => setIsEditOpen(false)}
+        cancha={canchaAEditar}
+        onUpdate={handleActualizarCancha}
       />
     </div>
   );
