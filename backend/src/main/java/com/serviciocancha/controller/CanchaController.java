@@ -28,4 +28,15 @@ public class CanchaController {
     public Cancha guardar(@RequestBody Cancha cancha) {
         return canchaService.guardar(cancha);
     }
+
+    @DeleteMapping("/{id}")
+    public void eliminar(@PathVariable Integer id) {
+        canchaService.eliminar(id);
+    }
+
+    @PutMapping("/{id}")
+    public Cancha canchaActualizar(@PathVariable Integer id, @RequestBody Cancha cancha) {
+        cancha.setId(id);
+        return canchaService.guardar(cancha);
+    }
 }
