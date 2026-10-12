@@ -1,9 +1,7 @@
 package com.serviciocancha.service;
 
 import com.serviciocancha.model.MetodoPago;
-import com.serviciocancha.model.Reserva;
 import com.serviciocancha.repository.MetodoPagoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,8 +9,12 @@ import java.util.List;
 @Service
 public class MetodoPagoService {
 
-    @Autowired
-    private MetodoPagoRepository metodoPagoRepository;
+    // 1. Inyección por constructor (recomendado)
+    private final MetodoPagoRepository metodoPagoRepository;
+
+    public MetodoPagoService(MetodoPagoRepository metodoPagoRepository) {
+        this.metodoPagoRepository = metodoPagoRepository;
+    }
 
     public List<MetodoPago> listar() {
         return metodoPagoRepository.findAll();
@@ -27,8 +29,12 @@ public class MetodoPagoService {
     }
 
     public MetodoPago actualizar(Integer id, MetodoPago datos) {
-        MetodoPago metodoPago = metodoPagoRepository.findById(id)
-                .orElse(null);
+        MetodoPago metodoPago = metodoPagoRepository.findById(id).orElse(null);
+
+        // 2. Validación de seguridad para evitar NullPointerException si el ID no existe
+        if (metodoPago == null) {
+            return null;
+        }
 
         metodoPago.setNombre(datos.getNombre());
         return metodoPagoRepository.save(metodoPago);
