@@ -1,13 +1,13 @@
 package com.serviciocancha.controller;
 
 import com.serviciocancha.model.Cliente;
-import com.serviciocancha.model.MetodoPago;
 import com.serviciocancha.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/clientes")
 public class ClienteController {
@@ -31,9 +31,7 @@ public class ClienteController {
     }
 
     @PutMapping("/{id}")
-    public Cliente actualizar(
-            @PathVariable Integer id,
-            @RequestBody Cliente cliente) {
+    public Cliente actualizar(@PathVariable Integer id, @RequestBody Cliente cliente) {
         return clienteService.actualizar(id, cliente);
     }
 
