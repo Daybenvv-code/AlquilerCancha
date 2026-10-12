@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 @RestController
 @RequestMapping("/api/canchas")
 public class CanchaController {
@@ -26,17 +27,24 @@ public class CanchaController {
 
     @PostMapping
     public Cancha guardar(@RequestBody Cancha cancha) {
+        // Aseguramos minúsculas para el estado si viene en mayúsculas
+        if (cancha.getEstado() != null) {
+            cancha.setEstado(cancha.getEstado().toLowerCase());
+        }
+        return canchaService.guardar(cancha);
+    }
+
+    @PutMapping("/{id}")
+    public Cancha actualizar(@PathVariable Integer id, @RequestBody Cancha cancha) {
+        cancha.setId(id);
+        if (cancha.getEstado() != null) {
+            cancha.setEstado(cancha.getEstado().toLowerCase());
+        }
         return canchaService.guardar(cancha);
     }
 
     @DeleteMapping("/{id}")
     public void eliminar(@PathVariable Integer id) {
         canchaService.eliminar(id);
-    }
-
-    @PutMapping("/{id}")
-    public Cancha canchaActualizar(@PathVariable Integer id, @RequestBody Cancha cancha) {
-        cancha.setId(id);
-        return canchaService.guardar(cancha);
     }
 }
