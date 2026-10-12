@@ -26,14 +26,13 @@ public class ReservaService {
     }
 
     public Reserva actualizar(Integer id, Reserva datos) {
-        Reserva reserva = reservaRepository.findById(id)
-                .orElse(null);
+        Reserva reserva = reservaRepository.findById(id).orElse(null);
 
         if (reserva == null) {
             return null;
         }
 
-        reserva.setId(datos.getId());
+        // NO sobreescribimos el ID para mantener la integridad de JPA
         reserva.setCancha(datos.getCancha());
         reserva.setCliente(datos.getCliente());
         reserva.setMetodoPago(datos.getMetodoPago());
