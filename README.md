@@ -8,6 +8,7 @@ Buscamos que el sistema resuelva la problemática la de la mala gestión de hora
 Tecnologías: React, Spring Boot, PostgreSQL, Neon, Railway, Vercel.
 
 FRONTED Y BACKEND DESPLEGADOS:
+
 BACKEND: https://invigorating-endurance-production-b7e9.up.railway.app
 FRONTED: https://alquiler-cancha.vercel.app
 
